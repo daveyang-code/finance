@@ -5,5 +5,5 @@ Monte Carlo price simulation for Geometric Brownian Motion, Merton Jump-Diffusio
 ![m2](https://github.com/user-attachments/assets/0bdc6828-3b0d-4d9d-81da-d2c56a217519)
 ![h1](https://github.com/user-attachments/assets/1aed5f4c-26d3-4998-9bd2-3c5046c6ce68)
 ![h2](https://github.com/user-attachments/assets/1bf886a9-6ea7-4e18-a205-05bbed9ec1c4)
-![o2](https://github.com/user-attachments/assets/2fba3096-d802-4f44-a6df-51ad20792d8f)
 ![o1](https://github.com/user-attachments/assets/58da5a09-54e1-42fc-b717-87cf5d247fc2)
+![o2](https://github.com/user-attachments/assets/2fba3096-d802-4f44-a6df-51ad20792d8f)
