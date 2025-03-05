@@ -73,6 +73,23 @@ def simulate_heston(S0, mu, v0, kappa, theta, sigma_v, rho, T, dt, paths):
     return t, prices
 
 
+def simulate_ornstein_uhlenbeck(S0, theta, kappa, sigma, T, dt, paths):
+    """Simulates stock price paths using the Ornstein-Uhlenbeck mean-reverting process."""
+    N = int(T / dt)
+    t = np.linspace(0, T, N)
+    dt_sqrt = np.sqrt(dt)
+
+    prices = np.zeros((paths, N))
+    prices[:, 0] = S0
+
+    for i in range(1, N):
+        dW = np.random.randn(paths) * dt_sqrt
+        dS = kappa * (theta - prices[:, i - 1]) * dt + sigma * dW
+        prices[:, i] = prices[:, i - 1] + dS
+
+    return t, prices
+
+
 # Streamlit UI
 st.set_page_config(page_title="Monte Carlo Stock Price Simulation")
 st.title("Monte Carlo Stock Price Simulation")
@@ -80,7 +97,12 @@ st.title("Monte Carlo Stock Price Simulation")
 # Model selection
 model = st.selectbox(
     "Select Model",
-    ["Brownian Motion", "Jump-Diffusion", "Heston Stochastic Volatility"],
+    [
+        "Brownian Motion",
+        "Jump-Diffusion",
+        "Heston Stochastic Volatility",
+        "Ornstein-Uhlenbeck Mean Reversion",
+    ],
 )
 
 # User inputs
@@ -117,6 +139,15 @@ elif model == "Heston Stochastic Volatility":
         t, prices = simulate_heston(
             S0, mu, v0, kappa, theta, sigma_v, rho, T, dt, paths
         )
+
+elif model == "Ornstein-Uhlenbeck Mean Reversion":
+    theta = st.number_input("Long-Term Mean Price", value=100.0)
+    kappa = st.number_input("Mean Reversion Speed", value=0.5)
+    sigma = st.number_input("Volatility", value=5.0)
+
+    if st.button("Run Simulation"):
+        t, prices = simulate_ornstein_uhlenbeck(S0, theta, kappa, sigma, T, dt, paths)
+
 
 # Plot results
 if "prices" in locals():
